@@ -477,7 +477,7 @@ if (isset($_GET['Message'])) {
   </select>
 </li>
        <li>
-  <label for="mother">and mother tounge</label><br>
+  <label for="mother">and mother tongue</label><br>
   <select name="mother" id="mother">
       <option value="hindi">Hindi</option>
     <option value="Marathi">Marathi</option>

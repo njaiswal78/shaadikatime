@@ -24,7 +24,7 @@ body{
   background-size: cover;
 
   width: 100%;
-  height:90%;
+  height:100%;
 
 }
 header{
@@ -78,6 +78,7 @@ footer{
   float:left;
   width:5%;
   text-align:center;
+  position: fixed;
 }
 .menu a {
   background-color:#e5e5e5;
@@ -88,24 +89,30 @@ footer{
   color:black;
 }
 .main {
+  font-family: fontawesome;
   float:left;
   width:90%;
-  height: 70vh;
+  height: 80vh;
   padding:0 20px;
   text-align: center; 
   color: white; 
   text-shadow:1px 1px 1px #1f2a1f;
   font-size: 20px;
-  border:1px solid black;
+  background-color: rgba(0,0,139,0.2);
+  border-radius: 20px;
+  margin-left: 5%;
+  margin-right: 5%;
+ 
 }
 
 .slider{
 width: 70%;
 height: 5vh;
-position: fixed;
+position: absolute;
 padding: 15px 19px 30px;
 margin-top: 2vh;
 margin-left: 10%;
+font-family: fontawesome;
 
 }
 #sliders{
@@ -133,46 +140,71 @@ progress{
 
 .photo-section{
 width:20%;
-height: 40vh;
+height: 45vh;
 margin-left: 15%;
 padding: 15px 19px 30px;
 margin-top: 20vh;
 padding-top: 15vh;
-position:fixed;
-border:1px solid white;
+position:absolute;
+border-radius: 10px;
 background-size: cover,contain;
 background-position: center;
 background-repeat: no-repeat;
 background-image: url(images/profile-placeholder.jpg);
-cursor: pointer;
+cursor: zoom-in;
+transition: transform .2s ease;
 }
+.photo-section:hover{
+  -ms-transform: scale(1.2); /* IE 9 */
+  -webkit-transform: scale(1.); /* Safari 3-8 */
+  transform: scale(1.2); 
+  cursor: zoom-out;
+}
+
 .photo-section button{
   position: absolute;
   bottom: 10px;
   margin-left: 2em;
 }
+.photo-section input{
+  color: black;
+  border:1px solid black;
+}
 
 .text-section{
 width:30%;
-height: 30vh;
-margin-top: 20vh;
-position:fixed;
-border:1px solid white;
+height: 40vh;
+margin-top: 17vh;
+position:absolute;
 text-align: center;
 margin-left: 40%;
 
 }
 
+.text-section input[type=submit]{
+   border-radius: 5px; 
+  color: white;
+  background-color:darkblue;
+  cursor: pointer;
+  line-height: 1.5;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  box-shadow: 1px 1px 2px #888888;
+  opacity: 1;
+
+}
 table {
-  font-family: arial, sans-serif;
+  font-family: fontawesome;
   border-collapse: collapse;
   width: 100%;
+  border:none;
+
 }
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
+td {
   padding: 8px;
+  text-align: left;  
+  border-bottom: 1px solid #ddd;
 }
 table input, select{
   color:black;
@@ -194,7 +226,7 @@ table input, select{
     -moz-padding-start: 2px;
 }
 table input, select:focus{
-  background-color: #ddd;
+  background-color: white;
   outline: none;
 }
 #cImage{
@@ -244,13 +276,29 @@ function closeForm() {
   document.getElementById("myForm").style.display = "none";
   document.getElementById("signupform").style.display = "none";
 }
-function changeImage() {
-  document.getElementById("cImage").style.display = "block";
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
+function congrats(){
+document.getElementById("mains").style.backgroundImage = "none";
 }
 
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("button").click(function(){
+    $("#cImage").toggle();
+  });
+});
+</script>
+
 </head>
-<body>
+<body onmousemove="congrats()">
   <div class="top-container">
 <header>
 <div>
@@ -273,7 +321,8 @@ function changeImage() {
     <a href="#">Link 4</a>
   </div>
 
-  <div class="main">
+  <div class="main" id="mains">
+
 <h1>
 You are almost there, complete your profile.
 </h1>
@@ -287,6 +336,12 @@ You are almost there, complete your profile.
     $religion=$result['Religion'];
     $gender=$result['Gender'];
     $image=$result['image'];
+    $city=$result['City'];
+    $state=$result['State'];
+    $caste=$result['Caste'];
+    $tongue=$result['Tongue'];
+    $occupation=$result['Occupation'];
+    $college=$result['College'];
     } 
   ?>
 
@@ -303,9 +358,10 @@ You are almost there, complete your profile.
   <span style="font-weight: bolder;font-size: 2em;">+</span><br>
   Add Photo
   <form action="upload.php" method="post" enctype="multipart/form-data">
-  Select image to upload:
-  <input type="file" name="fileToUpload" id="fileToUpload">
+  <input type="file" name="fileToUpload" id="fileToUpload"><br>
   <input type="submit" value="Upload Image" name="submit">
+  </form>
+
 <?php
 }
 else{
@@ -316,23 +372,26 @@ document.getElementById("slider-text").innerHTML="80% profile completed";
 document.getElementById("sliders").value="80";
 
  </script>
-
-<?php 
-
-} ?>
-</form>
-<button name="ChangeImage" onclick="changeImage();">Change Image</button>
+ <button name="ChangeImage">Change Image</button>
 <div id="cImage">
     <form action="reupload.php" method="post" enctype="multipart/form-data">
   Select image to upload:
   <input type="file" name="fileToUpload" id="fileToUpload">
   <input type="submit" value="Upload Image" name="submit">
+</form>
 </div>
+
+
+<?php 
+
+} ?>
+
+
 
 </div>
 <div  class="text-section">
   
- <table>
+ <table cellspacing="0" cellpadding="0">
    <tr>
      <td>
        <?php echo $name; ?>
@@ -354,12 +413,17 @@ document.getElementById("sliders").value="80";
        <?php echo $religion; ?>
      </td>
    </tr>
+   <?php
+if(empty($city)){
+    ?>
+<form action="add.php" method="post">
    <tr>
+
     <td>
-     City <input type="text" placeholder="Lucknow"> 
+     City <input type="text" placeholder="Enter Your City Name" name="city" required> 
     </td>
     <td>
-      State <select name="state">
+      State <select name="state" required>
         <option value="Maharashtra">Maharashtra</option>
         <option value="Andra Pradesh">Andra Pradesh</option>
         <option value="Madhya Pradesh">Madhya Pradesh</option>
@@ -368,9 +432,10 @@ document.getElementById("sliders").value="80";
         <option value="Jammu & Kashmir">Jammu & Kashmir</option>
         <option value="Chattisgarh">Chattisgarh</option>
         <option value="Manipur">Manipur</option>
-        <option value="Uttar Pradesh" selected>Uttar Pradesh</option>
+        <option value="Uttar Pradesh" >Uttar Pradesh</option>
         <option value="Tamil Nadu">Tamil Nadu</option>
         <option value="Gujarat">Gujarat</option>
+          <option value="Select Your State" selected>Select Your State</option>
         <option value="kerala">Kerala</option>
         <option value="Orissa">Orissa</option>
         <option value="Himanchal Pradesh">Himanchal Pradesh</option>
@@ -383,13 +448,15 @@ document.getElementById("sliders").value="80";
         <option value="Assam">Assam</option>
         <option value="Jharkhand">Jharkhand</option>
         <option value="Nagaland">Nagaland</option>
+        <option value="Other">Other</option>
+        
       </select> 
     </td>
      
    </tr>
    <tr>
      <td>
-    Caste <select name="caste">
+    Caste <select name="caste" required>
         <option value="Aggarwal">Aggarwal</option>
         <option value="Brahmin">Brahmin</option>
         <option value="Khatri">Khatri</option>
@@ -398,13 +465,15 @@ document.getElementById("sliders").value="80";
         <option value="Bania">Bania</option>
         <option value="Sikh Jat">Sikh Jat</option>
         <option value="Vaishnav">Vaishnav</option>
-        <option value="Kanyakubj Brahmin" selected>Kanyakubj Brahmin</option>
+        <option value="Kanyakubj Brahmin">Kanyakubj Brahmin</option>
         <option value="Jat">Jat</option>
         <option value="Kshatriya">Kshatriya</option>
         <option value="Sindhi">Sindhi</option>
         <option value="Swetanbar">Swetamber</option>
         <option value="Scheduled Caste">Scheduled Caste</option>
-        <option value="Gupta" selected>Gupta</option>
+        <option value="Gupta">Gupta</option>
+           <option value="Select Your Caste" selected>Select Your Caste</option>
+     
         <option value="Kurmi Kshatriya">Kurmi Kshatriya</option>
         <option value="Gaur Brahmin">Gaur Brahmin</option>
         <option value="Kayasth">Kayasth</option>
@@ -419,16 +488,130 @@ document.getElementById("sliders").value="80";
         <option value="Vishwakarma">Vishwakarma</option>
         <option value="Maali">Maali</option>
         <option value="Teli">Teli</option>
+        <option value="Other">Other</option>
         
       </select> 
        </td>
+       <td>
+         Mother Tongue
+      <select name="mother" id="mother" required>
+        
+      <option value="hindi">Hindi</option>
+    <option value="Marathi">Marathi</option>
+    <option value="Punjabi">Punjabi</option>
+      <option value="Bengali">Bengali</option>
+    <option value="Urdu">Urdu</option>
+    <option value="Kannad">Kannad</option>
+     <option value="Select Your Language" selected>Select Your Language</option>
+      <option value="English">English</option>
+    <option value="Tamil">Tamil</option>
+      <option value="Telegu">Telegu</option>
+    <option value="Oriya">Oriya</option>
+      <option value="Other">Other</option>
+  
+  </select>
+       </td>
    </tr>
+   <tr>
+     <td>
+       Occupation
+       <select name="Occupation" required>
+         <option value="IT Software">IT Software</option>
+         <option value="Teacher">Teacher</option>
+         <option value="CA Accountant">CA Accountant</option>
+         <option value="Businessmen">Businessmen</option>
+         <option value="Doctors">Doctors</option>
+         <option value="Govt. Services">Govt. Services</option>
+          <option value="Select Your Occupation" selected>Select Your Occupation</option>         
+         <option value="Lawyers">Lawyers</option>
+         <option value="Defence">Defence</option>
+         <option value="IAS">IAS</option>
+         <option value="Nurse">Nurse</option>
+         <option value="Engineers">Engineers</option>
+         <option value="NGO">NGO</option>
+         <option value="Police">Police</option>
+         <option value="Hotels Hospitality">Hotels Hospitality</option>
+         <option value="Other">Other</option>
+       </select>
+     </td>
+     <td>
+       College
+       <select name="college" required>
+         <option value="NIT">NIT</option>
+         <option value="IIT">IIT</option>
+         <option value="IIM">IIM</option>
+            <option value="Select Your College" selected>Select Your College</option>         
+         <option value="ISB">ISB</option>
+         <option value="ICAI">ICAI</option>
+         <option value="Other">Other</option>
+       </select>
+     </td>
+   </tr>
+   <input type="submit" value="Submit" id="submits">
+   </form>
+   <?php 
+  }
+  else{
+    ?>
+    <tr>
+      <td>
+        <?php echo $city; ?>
+      </td>
+      <td>
+        <?php echo $state; ?>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <?php echo $caste; ?>
+      </td>
+      <td>
+        <?php echo $tongue; ?>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <?php echo $occupation; ?>
+      </td>
+      <td>
+        <?php echo $college; ?>
+      </td>
+    </tr>
+    <?php if(empty($image)){  ?>
+    <script type="text/javascript">
+    document.getElementById("slider-text").innerHTML="70% profile completed";
+    document.getElementById("sliders").value="70"
+   // congrats();
+     // setTimeout(() => { console.log("World!"); }, 5000);
+<?php }
+else { ?>
+<script type="text/javascript">
+    document.getElementById("slider-text").innerHTML="100% profile completed";
+    document.getElementById("sliders").value="100"
+   // congrats();
+   document.getElementById("mains").style.backgroundImage = "url('images/congrats.gif')";
+<?php
+ } 
+?>    
+//    document.getElementsByClassName("top-container").style.backgroundImage = "url('images/congrats.gif')";
+     
+
+
+ </script>
+
+
+<?php 
+ }
+  
+   ?>
  </table> 
+
 
 </div>
 
 
   </div>
+
 
   <div class="right">
     <h2>About</h2>
