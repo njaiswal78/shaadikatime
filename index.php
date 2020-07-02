@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <?php
+session_start();
 if(isset($_COOKIE['email']) &&  empty($_GET['Message'])){
   header("location:home.php");
 }
+
 ?>
 
 <html>
@@ -109,6 +111,30 @@ position: static;
 padding: 15px 19px 30px;
 background:rgba(0,0,0,.3);
 border-radius: 3px;
+}
+
+.output{
+width: 90%;
+margin:auto;
+height: 20vh;
+position: static;
+text-align: center;
+padding: 15px 200px 30px;
+background:rgba(0,0,0,.3);
+border-radius: 3px;  
+color: white;
+}
+.output table{
+  border:1px solid white;
+  border-collapse: collapse;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.output table, td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
 }
 
 .search-input li{
@@ -258,6 +284,12 @@ border-radius: 3px;
   opacity: 0.8;
 }
 </style>
+
+<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
 <script>
 function openForm() {
   document.getElementById("myForm").style.display = "block";
@@ -377,7 +409,7 @@ if (isset($_GET['Message'])) {
 </h1>
 <div  class="search-section">
   <div class="search-input">
-    <form action="home.php">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
       <ul>
         <li>
   <label for="looking-for">I am looking for</label><br>
@@ -463,9 +495,9 @@ if (isset($_GET['Message'])) {
    <li>
   <label for="religion">of religion</label><br>
   <select name="religion" id="religion">
-    <option value="hindu">Hindu</option>
-    <option value="muslim">Muslim</option>
-    <option value="sikh">Sikh</option>
+    <option value="Hindu">Hindu</option>
+    <option value="Muslim">Muslim</option>
+    <option value="Sikh">Sikh</option>
       <option value="Christian">Christian</option>
 
     <option value="Parsis">Parsis</option>
@@ -477,28 +509,48 @@ if (isset($_GET['Message'])) {
   </select>
 </li>
        <li>
-  <label for="mother">and mother tongue</label><br>
-  <select name="mother" id="mother">
-      <option value="hindi">Hindi</option>
-    <option value="Marathi">Marathi</option>
-    <option value="Punjabi">Punjabi</option>
-      <option value="Bengali">Bengali</option>
-    <option value="Urdu">Urdu</option>
-    <option value="Kannad">Kannad</option>
-      <option value="English">English</option>
-    <option value="Tamil">Tamil</option>
-      <option value="Telegu">Telegu</option>
-    <option value="Oriya">Oriya</option>
-      <option value="Other">Other</option>
+  <label for="mother">and of caste</label><br>
+ <select name="caste" required>
+       
+        <option value="Aggarwal">Aggarwal</option>
+        <option value="Brahmin">Brahmin</option>
+        <option value="Khatri">Khatri</option>
+        <option value="Rajput">Rajput</option>
+        <option value="Arora">Arora</option>
+        <option value="Bania">Bania</option>
+        <option value="Sikh Jat">Sikh Jat</option>
+        <option value="Vaishnav">Vaishnav</option>
+        <option value="Kanyakubj Brahmin">Kanyakubj Brahmin</option>
+        <option value="Jat">Jat</option>
+        <option value="Kshatriya">Kshatriya</option>
+        <option value="Sindhi">Sindhi</option>
+        <option value="Swetanbar">Swetamber</option>
+        <option value="Scheduled Caste">Scheduled Caste</option>
+        <option value="Gupta" selected="">Gupta</option>
+          
+        <option value="Kurmi Kshatriya">Kurmi Kshatriya</option>
+        <option value="Gaur Brahmin">Gaur Brahmin</option>
+        <option value="Kayasth">Kayasth</option>
+        <option value="Maratha">Maratha</option>
+        <option value="Sunni">Sunni</option>
+        <option value="Yadav">Yadav</option>
+        <option value="Digamber">Digamber</option>
+        <option value="Teli">Teli</option>
+        <option value="Jaiswal">Jaiswal</option>
+        <option value="Singh">Singh</option>
+        <option value="Sharma">Sharma</option>
+        <option value="Vishwakarma">Vishwakarma</option>
+        <option value="Maali">Maali</option>
+        <option value="Teli">Teli</option>
+        <option value="Other">Other</option>
+        
+      </select> 
 
-  
-  
-  </select>
 </li>
   <li>
   <label for="looking-for">Let's find out</label><br>
     
-    <input type="submit" value="Search">
+    <input type="submit" value="Search" name="search">
 </li>
     </ul>
   
@@ -514,7 +566,63 @@ if (isset($_GET['Message'])) {
   </div>
 </div>
 </div>
+<div class="output">
+  <table>
+    <tr>
+      <th>
+        Name
+      </th>
+      <th>
+        Email
+      </th>
+    </tr>
+  <?php 
+if(isset($_POST['search'])){
+include "connection.php";
 
+$looking=$_POST['looking-for'];
+$age_from=$_POST['aged-from'];
+
+$age_to=$_POST['aged-to'];
+
+$religion=$_POST['religion'];
+$caste=$_POST['caste'];
+
+//echo "I am looking for $looking of age from $age_from to $age_to of religion $religion and caste $caste ";
+
+$sql="SELECT * FROM signups WHERE Gender='".$looking."' and Religion='".$religion."' and Caste='".$caste."' ";
+    $result = $con->query($sql);
+    if(mysqli_num_rows($result)>0){
+    while($row = $result->fetch_assoc())
+{
+  $d=(int)date('Y',strtotime("today"))-(int)date('Y',strtotime($row['DOB']));
+  if($d>=(int)$age_from && $d<=(int)$age_to){
+
+  //echo $row['Name']." and ".$row['Email']."<br>";
+  //echo "<br>";
+?>
+<tr>
+  <td>
+    <?php echo $row['Name'];?>
+  </td>
+  <td>
+    <?php echo $row['Email']; ?>
+  </td>
+</tr>
+<?php
+}
+
+} 
+    }else{
+      echo "No data found";
+    }
+
+}
+
+  ?>
+    </table>
+
+</div>
 <footer>
   <div>© copyright shadikatime.com</div>  
 </footer>

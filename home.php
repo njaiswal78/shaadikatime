@@ -123,6 +123,11 @@ include 'connection.php';
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css?family=Source Code Pro" rel="stylesheet">
 <title>#1 Matrimony Search Platform, It's perfect time to get married, search your partner now.</title>
+<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
 </head>
 <body>
 

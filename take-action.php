@@ -165,10 +165,12 @@ transition: transform .2s ease;
   position: absolute;
   bottom: 10px;
   margin-left: 2em;
+  cursor: pointer;  
 }
 .photo-section input{
   color: black;
   border:1px solid black;
+  cursor: pointer;
 }
 
 .text-section{
@@ -424,6 +426,7 @@ if(empty($city)){
     </td>
     <td>
       State <select name="state" required>
+        <option value="">Select Your State</option>
         <option value="Maharashtra">Maharashtra</option>
         <option value="Andra Pradesh">Andra Pradesh</option>
         <option value="Madhya Pradesh">Madhya Pradesh</option>
@@ -435,7 +438,6 @@ if(empty($city)){
         <option value="Uttar Pradesh" >Uttar Pradesh</option>
         <option value="Tamil Nadu">Tamil Nadu</option>
         <option value="Gujarat">Gujarat</option>
-          <option value="Select Your State" selected>Select Your State</option>
         <option value="kerala">Kerala</option>
         <option value="Orissa">Orissa</option>
         <option value="Himanchal Pradesh">Himanchal Pradesh</option>
@@ -457,6 +459,8 @@ if(empty($city)){
    <tr>
      <td>
     Caste <select name="caste" required>
+       <option value="">Select Your Caste</option>
+     
         <option value="Aggarwal">Aggarwal</option>
         <option value="Brahmin">Brahmin</option>
         <option value="Khatri">Khatri</option>
@@ -472,8 +476,7 @@ if(empty($city)){
         <option value="Swetanbar">Swetamber</option>
         <option value="Scheduled Caste">Scheduled Caste</option>
         <option value="Gupta">Gupta</option>
-           <option value="Select Your Caste" selected>Select Your Caste</option>
-     
+          
         <option value="Kurmi Kshatriya">Kurmi Kshatriya</option>
         <option value="Gaur Brahmin">Gaur Brahmin</option>
         <option value="Kayasth">Kayasth</option>
@@ -495,14 +498,13 @@ if(empty($city)){
        <td>
          Mother Tongue
       <select name="mother" id="mother" required>
-        
-      <option value="hindi">Hindi</option>
+     <option value="">Select Your Language</option>   
+      <option value="Hindi">Hindi</option>
     <option value="Marathi">Marathi</option>
     <option value="Punjabi">Punjabi</option>
       <option value="Bengali">Bengali</option>
     <option value="Urdu">Urdu</option>
     <option value="Kannad">Kannad</option>
-     <option value="Select Your Language" selected>Select Your Language</option>
       <option value="English">English</option>
     <option value="Tamil">Tamil</option>
       <option value="Telegu">Telegu</option>
@@ -516,13 +518,14 @@ if(empty($city)){
      <td>
        Occupation
        <select name="Occupation" required>
+        <option value="">Select Your Occupation</option>         
+    
          <option value="IT Software">IT Software</option>
          <option value="Teacher">Teacher</option>
          <option value="CA Accountant">CA Accountant</option>
          <option value="Businessmen">Businessmen</option>
          <option value="Doctors">Doctors</option>
          <option value="Govt. Services">Govt. Services</option>
-          <option value="Select Your Occupation" selected>Select Your Occupation</option>         
          <option value="Lawyers">Lawyers</option>
          <option value="Defence">Defence</option>
          <option value="IAS">IAS</option>
@@ -537,11 +540,12 @@ if(empty($city)){
      <td>
        College
        <select name="college" required>
+        <option value="">Select Your College</option>         
+    
          <option value="NIT">NIT</option>
          <option value="IIT">IIT</option>
          <option value="IIM">IIM</option>
-            <option value="Select Your College" selected>Select Your College</option>         
-         <option value="ISB">ISB</option>
+          <option value="ISB">ISB</option>
          <option value="ICAI">ICAI</option>
          <option value="Other">Other</option>
        </select>
