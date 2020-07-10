@@ -15,7 +15,7 @@ include 'connection.php';
 		$_SESSION['email']=$emailornumber;
 		$cookie_name = "email";
 		$cookie_value = base64_encode($emailornumber);
-		setcookie($cookie_name, $cookie_value, time() + (86400 * 1), "/","localhost");
+		setcookie($cookie_name, $cookie_value, time() + (86400 * 1), "/");
 		$sql="SELECT * FROM signups WHERE Email='".$emailornumber."' and password='".$password."' ";
 		$result = $con->query($sql);
 		if(mysqli_num_rows($result)>0){
@@ -37,7 +37,7 @@ include 'connection.php';
 //			echo "<script>alert('You have not entered correct email and password. Please re-enter correct credentials.');
 //			</script>";
 			session_destroy();
-			setcookie("email", "", time() - 3600,"/","localhost");
+			setcookie("email", "", time() - 3600,"/");
 			header("location:index.php?Message=" . urlencode($Message));
 
 
@@ -64,7 +64,7 @@ include 'connection.php';
 //			echo "<script>alert('You have not entered correct email and password. Please re-enter correct credentials.');
 //			</script>";
 			session_destroy();
-			setcookie("email", "", time() - 3600,"/","localhost");
+			setcookie("email", "", time() - 3600,"/");
 			header("location:index.php?Message=" . urlencode($Message));
 
 
@@ -72,7 +72,7 @@ include 'connection.php';
 		
 		$cookie_name = "email";
 		$cookie_value = base64_encode($email);
-		setcookie($cookie_name, $cookie_value, time() + (86400 * 1), "/","localhost");
+		setcookie($cookie_name, $cookie_value, time() + (86400 * 1), "/");
 
 		
 		
@@ -96,7 +96,7 @@ include 'connection.php';
 		$password=$_SESSION["password"];
 		if(empty($password)){
 		session_destroy();
-		setcookie("email", "", time() - 3600,"/","localhost");
+		setcookie("email", "", time() - 3600,"/");
 		header("location:index.php");
 
 		}
@@ -111,7 +111,7 @@ include 'connection.php';
 	}
 	else{
 		session_destroy();
-		setcookie("email", "", time() - 3600,"/","localhost");
+		setcookie("email", "", time() - 3600,"/");
 		header("location:index.php");
 
 	}
